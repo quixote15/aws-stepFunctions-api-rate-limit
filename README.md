@@ -25,7 +25,7 @@ Criamos uma máquina de estado que usa uma função Lambda para buscar as mensag
 
 
 <h1 align="center">
-  <img alt="storeCheckout" src="https://github.com/quixote15/aws-stepFunctions-api-rate-limit/blob/main/assets/orquestrador.jpeg" width="800px" height="800px" />
+  <img alt="storeCheckout" src="https://github.com/quixote15/aws-stepFunctions-api-rate-limit/blob/main/assets/orquestrador.jpeg" width="800px" height="500px" />
 </h1>
 
 ## ✋🏻 Pré-requisitos
