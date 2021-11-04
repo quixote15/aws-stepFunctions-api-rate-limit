@@ -1,18 +1,37 @@
 'use strict';
 
-module.exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+module.exports.pollRequestsAndCheckQuotas = async (event) => {
+ 
+ const requests = [{
+   type: 'bankSlip',
+   service: 'cashIn',
+   data: {
+     amount: 10,
+     account: 1
+   }
+ }, {
+  type: 'bankSlip',
+  service: 'cashIn',
+  data: {
+    amount: 100,
+    account: 2
+  }
+}]
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+return requests
+};
+
+
+module.exports.requestIterator = async ({requests}) => {
+  
+  if(requests.length > 0) {
+    // take a chunk list and make requests
+    const currentRequesChunk = requests.pop()
+    await setTimeout(() => {
+      console.log('realizou requests', currentRequesChunk)
+    }, 1000)
+  }
+
+
+  return {requests, hasPendingRequests: requests.length > 0}
 };
