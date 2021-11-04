@@ -24,6 +24,7 @@ return requests
 
 module.exports.requestIterator = async ({requests}) => {
   
+
   if(requests.length > 0) {
     // take a chunk list and make requests
     const currentRequesChunk = requests.pop()
@@ -33,5 +34,11 @@ module.exports.requestIterator = async ({requests}) => {
   }
 
 
-  return {requests, hasPendingRequests: requests.length > 0}
+  return requests
+};
+
+
+module.exports.checkNextRequestIteration = async ({requests}) => {
+
+  return requests.length > 0
 };

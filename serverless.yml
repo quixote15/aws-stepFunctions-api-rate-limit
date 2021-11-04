@@ -18,6 +18,8 @@ functions:
     handler: handler.pollRequestsAndCheckQuotas
   requestIterator:
     handler: handler.requestIterator
+  checkNextRequestIteration:
+    handler: handler.checkNextRequestIteration
   
 
 stepFunctions:
@@ -37,12 +39,18 @@ stepFunctions:
             Type: Task
             Resource:
               Fn::GetAtt: [requestIterator, Arn]
+            ResultPath: "$.requests"
+            Next: CheckNextRequestInteration
+          CheckNextRequestInteration:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [checkNextRequestIteration, Arn]
             ResultPath: "$.hasPendingRequests"
             Next: IsRequestListEmpty
           IsRequestListEmpty:
             Type: Choice
             Choices:
-              - Variable: $.hasPendingRequests.hasPendingRequests
+              - Variable: $.hasPendingRequests
                 BooleanEquals: true
                 Next: RequestIterator
             Default: EndRequestBatch
