@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "serverless-step-functions": "^3.1.1"
+  },
+  "dependencies": {
+    "faker": "^5.5.3"
   }
 }
