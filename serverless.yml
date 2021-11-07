@@ -13,7 +13,9 @@ provider:
     - Effect: Allow
       Action: sns:*
       Resource: arn:aws:sns:us-east-1:335006469695:NewApiRequest.fifo
-
+    - Effect: Allow
+      Action: sqs:*
+      Resource: arn:aws:sqs:us-east-1:335006469695:ApiRequestsQueue.fifo
 plugins:
   - serverless-step-functions
 
@@ -25,6 +27,7 @@ functions:
   checkNextRequestIteration:
     handler: handler.checkNextRequestIteration
   banklyRequest:
+    timeout: 60
     handler: handler.banklyRequest
   
 
@@ -32,6 +35,8 @@ stepFunctions:
   stateMachines:
     apiRateLimitOrchestrator:
       name: apiRateLimitOrchestrator
+      events:
+        - schedule: rate(1 minute)
       definition:
         StartAt: PollRequestsAndCheckQuotas
         States:
